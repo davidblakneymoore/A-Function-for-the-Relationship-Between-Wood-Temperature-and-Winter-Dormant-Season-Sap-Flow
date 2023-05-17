@@ -170,7 +170,7 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
   }
   Angles <- seq((0 + Slope_Interval), ((pi / 2) - Slope_Interval), Slope_Interval)
   Horizontal_Axis_Intercepts <- seq(min(Data_Frame$Predictor_Variable), max(Data_Frame$Predictor_Variable), by = Horizontal_Axis_Intercept_Interval)
-  Sums_of_Squared_Residuals <- list(NULL)
+  Output <- list(NULL)
   k <- 1
   for (i in seq_len(length(Horizontal_Axis_Intercepts))) {
     for (j in seq_len(length(Angles))) {
@@ -183,14 +183,11 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
       Horizontal_Points <- Data_Frame[Leftmost_Regions | Rightmost_Points, ]
       Horizontal_Sum_of_Squared_Residuals <- sum((Horizontal_Points$Response_Variable) ^ 2)
       Overall_Sum_of_Squared_Residuals <- Vertical_Sum_of_Squared_Residuals + Horizontal_Sum_of_Squared_Residuals
-      Sums_of_Squared_Residuals[[k]] <- list(Horizontal_Axis_Intercept = Horizontal_Axis_Intercepts[i], Angle = Angles[j], Overall_Sum_of_Squared_Residuals = Overall_Sum_of_Squared_Residuals)
+      Output[[k]] <- list(Horizontal_Axis_Intercept = Horizontal_Axis_Intercepts[i], Angle = Angles[j], Overall_Sum_of_Squared_Residuals = Overall_Sum_of_Squared_Residuals, Bottommost_Points_List = Data_Frame[Bottommost_Points, ], Leftmost_Points_List = Data_Frame[Leftmost_Regions, ], Topmost_Points_List = Data_Frame[Topmost_Points, ], Rightmost_Points_List = Data_Frame[Rightmost_Points, ], Vertical_Points = Vertical_Points, Horizontal_Points = Horizontal_Points)
       k <- k + 1
     }
   }
-  Critical_Point_Intercept <- Sums_of_Squared_Residuals[[which.min(sapply(Sums_of_Squared_Residuals, `[`, 'Overall_Sum_of_Squared_Residuals'))]]$Horizontal_Axis_Intercept
-  Critical_Point_Angle <- Sums_of_Squared_Residuals[[which.min(sapply(Sums_of_Squared_Residuals, `[`, 'Overall_Sum_of_Squared_Residuals'))]]$Angle
-  Critical_Point_Information <- c(Intercept = Critical_Point_Intercept, Angle = Critical_Point_Angle)
-  Critical_Point_Information
+  Output[[which.min(sapply(Output, `[`, 'Overall_Sum_of_Squared_Residuals'))]]
 }
 
 
@@ -201,6 +198,6 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
 
 (Critical_Point <- Function_for_Finding_the_Critical_Point(Predictor_Variable, Response_Variable, Data_Frame))
 plot(Response_Variable ~ Predictor_Variable, Data_Frame, main = 'Example Plot', xlab = 'Wood Temperature', ylab = 'Sap Flow')
-abline(v = Critical_Point['Intercept'], col = 4)
+abline(v = Critical_Point$Horizontal_Axis_Intercept, col = 4)
 
 # I think the function did a nice job!
