@@ -19,8 +19,7 @@ Data_Frame <- data.frame(Predictor_Variable = Predictor_Variable, Response_Varia
 plot(Response_Variable ~ Predictor_Variable, Data_Frame, main = 'Example Plot', xlab = 'Wood Temperature', ylab = 'Sap Flow')
 abline(h = 0, col = 4)
 
-# I included this figure in this repository - you can see it if you click on
-# 'Example Plot 1'.
+# This figure is included in this repository - it's called 'Example Plot 1'.
 
 # This made-up data mimics what I've seen in my studies on winter-dormant-
 # season sap flow, where wood temperature is the predictor variable and sap
@@ -67,6 +66,9 @@ points(Rightmost_Points$Predictor_Variable, Rightmost_Points$Response_Variable, 
 abline(a = (-Horizontal_Axis_Intercepts[i] * tan(Angles[j])), b = (tan(Angles[j])))
 abline(a = -(-Horizontal_Axis_Intercepts[i] * tan(Angles[j])), b = -(tan(Angles[j])))
 abline(h = 0)
+
+# An even better and more descriptive figure is included in this repository -
+# it's called 'Example Plot 2.jpeg'.
 
 # To find the critical value, two processes will happen. First, the lines
 # delineating the quadrants will start at the leftmost data point and
