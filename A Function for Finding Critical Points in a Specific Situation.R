@@ -1,5 +1,5 @@
 
-# Fitting a Vertical Line to Sap Flow and Wood Temperature Data
+# Finding Critical Points
 
 # David Moore
 # University of New Hampshire Ecohydrology Lab
