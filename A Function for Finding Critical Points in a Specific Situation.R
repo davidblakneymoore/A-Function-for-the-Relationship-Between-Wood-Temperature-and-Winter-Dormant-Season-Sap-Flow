@@ -200,6 +200,7 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
 
 (Critical_Point <- Function_for_Finding_the_Critical_Point(Predictor_Variable, Response_Variable, Data_Frame))
 plot(Response_Variable ~ Predictor_Variable, Data_Frame, main = 'Example Plot', xlab = 'Wood Temperature', ylab = 'Sap Flow')
+abline(h = 0, col = 4)
 abline(v = Critical_Point$Horizontal_Axis_Intercept, col = 4)
 
 # I think the function did a nice job!
