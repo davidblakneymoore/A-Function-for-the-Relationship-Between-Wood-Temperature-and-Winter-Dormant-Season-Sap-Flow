@@ -198,9 +198,9 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
 # Let's see if we can identify the critical point for the made-up data we
 # generated in the 'The Explanation' section.
 
-(Critical_Point <- Function_for_Finding_the_Critical_Point(Predictor_Variable, Response_Variable, Data_Frame))
+(Output <- Function_for_Finding_the_Critical_Point(Predictor_Variable, Response_Variable, Data_Frame))
 plot(Response_Variable ~ Predictor_Variable, Data_Frame, main = 'Example Plot', xlab = 'Wood Temperature', ylab = 'Sap Flow')
 abline(h = 0, col = 4)
-abline(v = Critical_Point$Horizontal_Axis_Intercept, col = 4)
+abline(v = Output$Horizontal_Axis_Intercept, col = 4)
 
 # I think the function did a nice job!
