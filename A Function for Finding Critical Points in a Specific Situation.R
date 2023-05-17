@@ -184,8 +184,10 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
       k <- k + 1
     }
   }
-  Critical_Point <- Sums_of_Squared_Residuals[[which.min(sapply(Sums_of_Squared_Residuals, `[`, 'Overall_Sum_of_Squared_Residuals'))]]$Horizontal_Axis_Intercept
-  Critical_Point
+  Critical_Point_Intercept <- Sums_of_Squared_Residuals[[which.min(sapply(Sums_of_Squared_Residuals, `[`, 'Overall_Sum_of_Squared_Residuals'))]]$Horizontal_Axis_Intercept
+  Critical_Point_Angle <- Sums_of_Squared_Residuals[[which.min(sapply(Sums_of_Squared_Residuals, `[`, 'Overall_Sum_of_Squared_Residuals'))]]$Angle
+  Critical_Point_Information <- c(Intercept = Critical_Point_Intercept, Angle = Critical_Point_Angle)
+  Critical_Point_Information
 }
 
 
@@ -194,8 +196,8 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
 # Let's see if we can identify the critical point for the made-up data we
 # generated in the 'The Explanation' section.
 
-Critical_Point <- Function_for_Finding_the_Critical_Point(Predictor_Variable, Response_Variable, Data_Frame)
+(Critical_Point <- Function_for_Finding_the_Critical_Point(Predictor_Variable, Response_Variable, Data_Frame))
 plot(Response_Variable ~ Predictor_Variable, Data_Frame, main = 'Example Plot', xlab = 'Wood Temperature', ylab = 'Sap Flow')
-abline(v = Critical_Point, col = 4)
+abline(v = Critical_Point['Intercept'], col = 4)
 
 # I think the function did a nice job!
