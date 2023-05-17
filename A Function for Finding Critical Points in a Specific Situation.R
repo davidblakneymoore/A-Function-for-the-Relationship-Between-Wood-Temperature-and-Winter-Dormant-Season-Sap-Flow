@@ -19,6 +19,9 @@ Data_Frame <- data.frame(Predictor_Variable = Predictor_Variable, Response_Varia
 plot(Response_Variable ~ Predictor_Variable, Data_Frame, main = 'Example Plot', xlab = 'Wood Temperature', ylab = 'Sap Flow')
 abline(h = 0, col = 4)
 
+# I included this figure in this repository - you can see it if you click on
+# 'Example Plot 1'.
+
 # This made-up data mimics what I've seen in my studies on winter-dormant-
 # season sap flow, where wood temperature is the predictor variable and sap
 # flow is the response variable. At extreme wood temperature values, there is
