@@ -67,9 +67,6 @@ abline(a = (-Horizontal_Axis_Intercepts[i] * tan(Angles[j])), b = (tan(Angles[j]
 abline(a = -(-Horizontal_Axis_Intercepts[i] * tan(Angles[j])), b = -(tan(Angles[j])))
 abline(h = 0)
 
-# An even better and more descriptive figure is included in this repository -
-# it's called 'Example Plot 2.jpeg'.
-
 # To find the critical value, two processes will happen. First, the lines
 # delineating the quadrants will start at the leftmost data point and
 # incrementally move rightward along the horizontal axis. Second, at each of
@@ -84,6 +81,9 @@ abline(h = 0)
 # are the difference between the data points in these two quadrants and the
 # horizontal axis) taken together. The critical point will be the value of the
 # predictor variable that generates the minimum least-squares value.
+
+# An even better and more descriptive figure that helps to explain this process
+# is included in this repository - it's called 'Example Plot 2.jpeg'.
 
 # This function takes five arguments. The first two are required.
 
