@@ -171,8 +171,11 @@ abline(h = 0)
 
 Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Response_Variable, Data_Frame, Horizontal_Variable_Minimum_Value = ifelse(is.null(Data_Frame), min(Predictor_Variable), min(Data_Frame$Predictor_Variable)), Horizontal_Variable_Maximum_Value = ifelse(is.null(Data_Frame), max(Predictor_Variable), max(Data_Frame$Predictor_Variable)), Vertical_Variable_Minimum_Value = ifelse(is.null(Data_Frame), min(Response_Variable), min(Data_Frame$Response_Variable)), Vertical_Variable_Maximum_Value = ifelse(is.null(Data_Frame), max(Response_Variable), max(Data_Frame$Response_Variable)), Slope_Interval = 0.01, Horizontal_Axis_Intercept_Interval = 0.01, Vertical_Axis_Intercept_Interval = 0.01) {
   if (is.null(Data_Frame)) {
-    if (!is.numeric(Predictor_Variable) | !is.numeric(Response_Variable)) {
-      stop ("'Predictor_Variable' and 'Response_Variable' must be numeric variables.")
+    if (!is.numeric(Predictor_Variable)) {
+      stop ("'Predictor_Variable' must be a numeric variable.")
+    }
+    if (!is.numeric(Response_Variable)) {
+      stop ("'Response_Variable' must be a numeric variable.")
     }
     if (length(Predictor_Variable) != length(Response_Variable)) {
       stop ("'Predictor_Variable' and 'Response_Variable' must be of the same length.")
@@ -286,7 +289,7 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
   Leftmost_Points_Logical <- ifelse((Data_Frame$Response_Variable > ((tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept - (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))) & (Data_Frame$Response_Variable < ((-tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept + (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))), T, F)
   Topmost_Points_Logical <- ifelse((Data_Frame$Response_Variable > ((tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept - (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))) & (Data_Frame$Response_Variable > ((-tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept + (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))), T, F)
   Rightmost_Points_Logical <- ifelse((Data_Frame$Response_Variable < ((tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept - (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))) & (Data_Frame$Response_Variable > ((-tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept + (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))), T, F)
-  list(Horizontal_Axis_Intercept = Best_Critical_Point$Horizontal_Axis_Intercept, Vertical_Axis_Intercept = Best_Critical_Point$Vertical_Axis_Intercept, Angle = Best_Critical_Point$Angle, Overall_Sum_of_Squared_Residuals = Best_Critical_Point$Overall_Sum_of_Squared_Residuals, Bottommost_Points = Data_Frame[Bottommost_Points_Logical, ], Leftmost_Points = Data_Frame[Leftmost_Regions_Logical, ], Topmost_Points = Data_Frame[Topmost_Points_Logical, ], Rightmost_Points = Data_Frame[Rightmost_Points_Logical, ], Horizontal_Points = Data_Frame[Leftmost_Regions_Logical | Rightmost_Points_Logical, ], Vertical_Points = Data_Frame[Bottommost_Points_Logical | Topmost_Points_Logical, ])
+  list(Horizontal_Axis_Intercept = Best_Critical_Point$Horizontal_Axis_Intercept, Vertical_Axis_Intercept = Best_Critical_Point$Vertical_Axis_Intercept, Angle = Best_Critical_Point$Angle, Overall_Sum_of_Squared_Residuals = Best_Critical_Point$Overall_Sum_of_Squared_Residuals, Bottommost_Points = Data_Frame[Bottommost_Points_Logical, ], Leftmost_Points = Data_Frame[Leftmost_Points_Logical, ], Topmost_Points = Data_Frame[Topmost_Points_Logical, ], Rightmost_Points = Data_Frame[Rightmost_Points_Logical, ], Horizontal_Points = Data_Frame[Leftmost_Regions_Logical | Rightmost_Points_Logical, ], Vertical_Points = Data_Frame[Bottommost_Points_Logical | Topmost_Points_Logical, ])
 }
 
 
