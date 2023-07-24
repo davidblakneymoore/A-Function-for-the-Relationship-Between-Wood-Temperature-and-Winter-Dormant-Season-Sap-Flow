@@ -98,7 +98,7 @@ abline(h = 0)
 # allowed to vary vertically, and the vertical position of this critical point
 # will be subtracted from all sap flow values to reset the baseline to 0.
 
-# This function takes six arguments. The first two are required.
+# This function takes ten arguments. The first two are required.
 
 # The 'Predictor_Variable' argument specifies which variable will be treated as
 # the variable on the horizontal axis. If the 'Data_Frame' argument is used to
@@ -121,6 +121,30 @@ abline(h = 0)
 # The 'Data_Frame' argument is optional and can be used to identify an object
 # of class 'data.frame' that contains both the predictor and response
 # variables.
+
+# The 'Horizontal_Variable_Minimum_Value' argument specifies the minimum
+# possible value for the critical point's horizontal axis (predictor variable)
+# value. Since it may not be computationally efficient to search for the
+# critical value across the entire range of the predictor variable, a subset of
+# predictor variable values can be specified.
+
+# The 'Horizontal_Variable_Maximum_Value' argument specifies the maximum
+# possible value for the critical point's horizontal axis (predictor variable)
+# value. Since it may not be computationally efficient to search for the
+# critical value across the entire range of the predictor variable, a subset of
+# predictor variable values can be specified.
+
+# The 'Vertical_Variable_Minimum_Value' argument specifies the minimum possible
+# value for the critical point's vertical axis (response variable) value. Since
+# it may not be computationally efficient to search for the critical value
+# across the entire range of the response variable, a subset of response
+# variable values can be specified.
+
+# The 'Vertical_Variable_Maximum_Value' argument specifies the maximum possible
+# value for the critical point's vertical axis (response variable) value. Since
+# it may not be computationally efficient to search for the critical value
+# across the entire range of the response variable, a subset of response
+# variable values can be specified.
 
 # The 'Slope_Interval' argument specifies, in radians, how gradually slopes
 # (angles) should increase from 0 to pi / 2. Smaller 'Slope_Interval' values
@@ -145,7 +169,7 @@ abline(h = 0)
 
 # The Function
 
-Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Response_Variable, Data_Frame, Slope_Interval = 0.01, Horizontal_Axis_Intercept_Interval = 0.1, Vertical_Axis_Intercept_Interval = 0.1) {
+Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Response_Variable, Data_Frame, Horizontal_Variable_Minimum_Value = ifelse(is.null(Data_Frame), min(Predictor_Variable), min(Data_Frame$Predictor_Variable)), Horizontal_Variable_Maximum_Value = ifelse(is.null(Data_Frame), max(Predictor_Variable), max(Data_Frame$Predictor_Variable)), Vertical_Variable_Minimum_Value = ifelse(is.null(Data_Frame), min(Response_Variable), min(Data_Frame$Response_Variable)), Vertical_Variable_Maximum_Value = ifelse(is.null(Data_Frame), max(Response_Variable), max(Data_Frame$Response_Variable)), Slope_Interval = 0.01, Horizontal_Axis_Intercept_Interval = 0.1, Vertical_Axis_Intercept_Interval = 0.1) {
   if (is.null(Data_Frame)) {
     if (!is.numeric(Predictor_Variable) | !is.numeric(Response_Variable)) {
       stop ("'Predictor_Variable' and 'Response_Variable' must be numeric variables.")
@@ -171,6 +195,42 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
       stop ("'Predictor_Variable' and 'Response_Variable' must be of the same length.")
     }
     Data_Frame <- data.frame(Predictor_Variable = Predictor_Variable, Response_Variable = Response_Variable)
+  }
+  if (!is.numeric(Horizontal_Variable_Minimum_Value)) {
+    stop ("'Horizontal_Variable_Minimum_Value' must be numeric.")
+  }
+  if (length(Horizontal_Variable_Minimum_Value) != 1) {
+    stop ("'Horizontal_Variable_Minimum_Value' must be a single value.")
+  }
+  if (Horizontal_Variable_Minimum_Value > max(Data_Frame$Predictor_Variable) | Horizontal_Variable_Minimum_Value < min(Data_Frame$Predictor_Variable)) {
+    stop ("'Horizontal_Variable_Minimum_Value' must be within the range of predictor variable values.")
+  }
+  if (!is.numeric(Horizontal_Variable_Maximum_Value)) {
+    stop ("'Horizontal_Variable_Maximum_Value' must be numeric.")
+  }
+  if (length(Horizontal_Variable_Maximum_Value) != 1) {
+    stop ("'Horizontal_Variable_Maximum_Value' must be a single value.")
+  }
+  if (Horizontal_Variable_Maximum_Value > max(Data_Frame$Predictor_Variable) | Horizontal_Variable_Maximum_Value < min(Data_Frame$Predictor_Variable)) {
+    stop ("'Horizontal_Variable_Maximum_Value' must be within the range of predictor variable values.")
+  }
+  if (!is.numeric(Vertical_Variable_Minimum_Value)) {
+    stop ("'Vertical_Variable_Minimum_Value' must be numeric.")
+  }
+  if (length(Vertical_Variable_Minimum_Value) != 1) {
+    stop ("'Vertical_Variable_Minimum_Value' must be a single value.")
+  }
+  if (Vertical_Variable_Minimum_Value > max(Data_Frame$Response_Variable) | Vertical_Variable_Minimum_Value < min(Data_Frame$Response_Variable)) {
+    stop ("'Vertical_Variable_Minimum_Value' must be within the range of response variable values.")
+  }
+  if (!is.numeric(Vertical_Variable_Maximum_Value)) {
+    stop ("'Vertical_Variable_Maximum_Value' must be numeric.")
+  }
+  if (length(Vertical_Variable_Maximum_Value) != 1) {
+    stop ("'Vertical_Variable_Maximum_Value' must be a single value.")
+  }
+  if (Vertical_Variable_Maximum_Value > max(Data_Frame$Response_Variable) | Vertical_Variable_Maximum_Value < min(Data_Frame$Response_Variable)) {
+    stop ("'Vertical_Variable_Maximum_Value' must be within the range of response variable values.")
   }
   if (!is.numeric(Horizontal_Axis_Intercept_Interval)) {
     stop ("'Horizontal_Axis_Intercept_Interval' must be numeric.")
@@ -200,8 +260,8 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
     stop ("'Slope_Interval' must be greater than 0 and less than pi / 2.")
   }
   Angles <- seq((0 + Slope_Interval), ((pi / 2) - Slope_Interval), Slope_Interval)
-  Horizontal_Axis_Intercepts <- seq(min(Data_Frame$Predictor_Variable), max(Data_Frame$Predictor_Variable), by = Horizontal_Axis_Intercept_Interval)
-  Vertical_Axis_Intercepts <- seq(min(Data_Frame$Response_Variable), max(Data_Frame$Response_Variable), by = Vertical_Axis_Intercept_Interval)
+  Horizontal_Axis_Intercepts <- seq(Horizontal_Variable_Minimum_Value, Horizontal_Variable_Maximum_Value, by = Horizontal_Axis_Intercept_Interval)
+  Vertical_Axis_Intercepts <- seq(Vertical_Variable_Minimum_Value, Vertical_Variable_Maximum_Value, by = Vertical_Axis_Intercept_Interval)
   Output <- list(NULL)
   Counter <- 1
   for (i in seq_len(length(Horizontal_Axis_Intercepts))) {
@@ -230,7 +290,7 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
 # Let's see if we can identify the critical point for the made-up data we
 # generated in the 'The Explanation' section.
 
-(Output <- Function_for_Finding_the_Critical_Point(Predictor_Variable, Response_Variable, Data_Frame))
+(Output <- Function_for_Finding_the_Critical_Point(Predictor_Variable, Response_Variable, Data_Frame, Horizontal_Variable_Minimum_Value = 5, Horizontal_Variable_Maximum_Value = 40, Vertical_Variable_Minimum_Value = -10, Vertical_Variable_Maximum_Value = 10))
 plot(Response_Variable ~ Predictor_Variable, Data_Frame, main = 'Example Plot', xlab = 'Wood Temperature', ylab = 'Sap Flow')
 abline(h = Output$Vertical_Axis_Intercept, col = 4)
 abline(v = Output$Horizontal_Axis_Intercept, col = 4)
