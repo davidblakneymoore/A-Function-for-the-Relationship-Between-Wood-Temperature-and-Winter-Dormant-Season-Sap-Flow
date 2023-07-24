@@ -1,4 +1,4 @@
-# A-Function-for-Finding-Critical-Points-in-the-Relationship-Between-Wood-Temperature-and-Winter-Dormant-Season-Sap-Flow
+# A-Function-for-Finding-Critical-Points-for-the-Relationship-Between-Wood-Temperature-and-Winter-Dormant-Season-Sap-Flow
 
 There are situations where data points, when plotted, cluster around the horizontal axis except when they're near a particular value along that axis. The 'Example Plot 1.jpeg' figure in this repository illustrates this idea. In these scenarios, the value of the predictor variable at which the response variable is most variable is unknown. This value, which I'll call the 'critical value', should be identified and likely has some significance in the system being studied. Here, I propose a method to estimate these critical values.
 
