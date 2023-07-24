@@ -70,7 +70,7 @@ abline(a = (Vertical_Axis_Intercepts[j] - (Horizontal_Axis_Intercepts[i] * tan(A
 abline(a = (Vertical_Axis_Intercepts[j] + (Horizontal_Axis_Intercepts[i] * tan(Angles[k]))), b = (-tan(Angles[k])))
 abline(h = 0)
 
-# To find the critical value, two processes will happen. First, the lines
+# To find the critical value, two major processes will happen. First, the lines
 # delineating the quadrants will start at the leftmost data point and
 # incrementally move rightward along the horizontal axis. Second, at each of
 # the horizontal axis intercepts where these two lines meet, the angles of
@@ -85,7 +85,7 @@ abline(h = 0)
 # horizontal axis) taken together. The critical point will be the value of the
 # predictor variable that generates the minimum least-squares value.
 
-# Actually, a third process will happen concurrently also. The vertical
+# Actually, a third minor process will happen concurrently also. The vertical
 # position of this critical point will be allowed to vary as well. Although, in
 # theory, sap flow will approach 0 at extreme temperatures, in practice, sap
 # flow values are typically off by a small amount due to probe misalignment
