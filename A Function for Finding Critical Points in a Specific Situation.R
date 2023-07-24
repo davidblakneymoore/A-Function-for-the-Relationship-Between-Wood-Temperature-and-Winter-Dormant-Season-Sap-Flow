@@ -1,9 +1,10 @@
 
-# Finding Critical Points
+# Finding Critical Points for the Relationship Between Wood Temperature and
+# Winter-Dormant-Season Sap Flow
 
 # David Moore
 # University of New Hampshire Ecohydrology Lab
-# May 2023
+# July 2023
 # davidblakneymoore@gmail.com
 
 
@@ -85,7 +86,10 @@ abline(h = 0)
 # horizontal axis) taken together. The critical point will be the value of the
 # predictor variable that generates the minimum least-squares value.
 
-# Actually, a third minor process will happen concurrently also. The vertical
+# An even better and more descriptive figure that helps to explain this process
+# is included in this repository - it's called 'Example Plot 2.jpeg'.
+
+# Actually, a third minor process will also happen concurrently. The vertical
 # position of this critical point will be allowed to vary as well. Although, in
 # theory, sap flow will approach 0 at extreme temperatures, in practice, sap
 # flow values are typically off by a small amount due to probe misalignment
@@ -93,9 +97,6 @@ abline(h = 0)
 # determine the empirical value for no sap flow, this critical point will be
 # allowed to vary vertically, and the vertical position of this critical point
 # will be subtracted from all sap flow values to reset the baseline to 0.
-
-# An even better and more descriptive figure that helps to explain this process
-# is included in this repository - it's called 'Example Plot 2.jpeg'.
 
 # This function takes six arguments. The first two are required.
 
