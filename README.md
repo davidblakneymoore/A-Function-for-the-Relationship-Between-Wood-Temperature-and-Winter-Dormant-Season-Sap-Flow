@@ -1,4 +1,4 @@
-# A-Function-for-Finding-Critical-Points-in-a-Specific-Situation
+# A-Function-for-Finding-Critical-Points-in-the-Relationship-Between-Wood-Temperature-and-Winter-Dormant-Season-Sap-Flow
 
 There are situations where data points, when plotted, cluster around the horizontal axis except when they're near a particular value along that axis. The 'Example Plot 1.jpeg' figure in this repository illustrates this idea. In these scenarios, the value of the predictor variable at which the response variable is most variable is unknown. This value, which I'll call the 'critical value', should be identified and likely has some significance in the system being studied. Here, I propose a method to estimate these critical values.
 
@@ -6,7 +6,9 @@ To estimate a critical value, I propose to split the plane of the plot up into f
 
 To find the critical value, two processes will happen. First, the lines delineating the quadrants will start at the leftmost data point and together incrementally move rightward along the horizontal axis until they reach the rightmost data point. Second, at each position along the horizontal axis where these two lines cross, the angles of these lines will vary incrementally from `0` to `pi / 2` radians. The 'Example Plot 2.jpeg' figure in this repository illustrates this idea. For each combination of horizontal axis intercept and angle, a least-squares value will be calculated. This least-squares value will be the sum of the squared residuals from the topmost and bottommost quadrants taken together (these residuals are the difference between the data points in these two quadrants and the vertical line that passes through the point where the lines delineating the quadrants cross) and from the leftmost and rightmost quadrants taken together (these residuals are the difference between the data points in these two quadrants and the horizontal axis). The critical point will be the value of the predictor variable that generates the minimum least-squares value.
 
-This function takes five arguments. The first two are required.
+Actually, a third process will happen concurrently also. The vertical position of this critical point will be allowed to vary as well. Although, in theory, sap flow will approach 0 at extreme temperatures, in practice, sap flow values are typically off by a small amount due to probe misalignment (details can be found in Burgess et al., 2001). Therefore, in order to determine the empirical value for no sap flow, this critical point will be allowed to vary vertically, and the vertical position of this critical point will be subtracted from all sap flow values to reset the baseline to 0.
+
+This function takes six arguments. The first two are required.
 
 The `Predictor_Variable` argument specifies which variable will be treated as the variable on the horizontal axis. If the `Data_Frame` argument is used to specify a data frame containing the predictor variable column, the `Predictor_Variable` argument should not be written as a character string (it should not be surrounded by quotation marks). If the `Data_Frame` argument is not used, the `Predictor_Variable` argument should  be written as a character string, surrounded by quotation marks. This argument must be numeric and of the same length as the `Response_Variable` argument.
 
@@ -17,3 +19,5 @@ The `Data_Frame` argument is optional and can be used to identify an object of c
 The `Slope_Interval` argument specifies, in radians, how gradually slopes (angles) should increase from `0` to `pi / 2`. Smaller `Slope_Interval` values will cause the function to take longer to run but will lead to more accurate critical values. This argument must be numeric, of length `1`, and between `0` and `pi / 2`.
 
 The `Horizontal_Axis_Intercept_Interval` argument specifies, in whatever units the predictor variable is in, how gradually the quadrants shift from right to left. Smaller `Horizontal_Axis_Intercept_Interval` values will cause the function to take longer to run but will lead to more accurate critical values. This argument must be numeric, of length `1`, and between `0` and the domain of the predictor variable.
+
+The `Vertical_Axis_Intercept_Interval` argument specifies, in whatever units the response variable is in, how gradually the quadrants shift from top to bottom. Smaller `Vertical_Axis_Intercept_Interval` values will cause the function to take longer to run but will lead to more accurate critical values. This argument must be numeric, of length `1`, and between `0` and the domain of the response variable.
