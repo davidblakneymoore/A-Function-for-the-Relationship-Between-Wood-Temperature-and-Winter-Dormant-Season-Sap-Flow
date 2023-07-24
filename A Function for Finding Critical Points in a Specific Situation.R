@@ -268,20 +268,25 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
     for (j in seq_len(length(Vertical_Axis_Intercepts))) {
       for (k in seq_len(length(Angles))) {
         Bottommost_Points <- ifelse((Data_Frame$Response_Variable < ((tan(Angles[k]) * Data_Frame$Predictor_Variable) + Vertical_Axis_Intercepts[j] - (Horizontal_Axis_Intercepts[i] * tan(Angles[k])))) & (Data_Frame$Response_Variable < ((-tan(Angles[k]) * Data_Frame$Predictor_Variable) + Vertical_Axis_Intercepts[j] + (Horizontal_Axis_Intercepts[i] * tan(Angles[k])))), T, F)
-        Leftmost_Regions <- ifelse((Data_Frame$Response_Variable > ((tan(Angles[k]) * Data_Frame$Predictor_Variable) + Vertical_Axis_Intercepts[j] - (Horizontal_Axis_Intercepts[i] * tan(Angles[k])))) & (Data_Frame$Response_Variable < ((-tan(Angles[k]) * Data_Frame$Predictor_Variable) + Vertical_Axis_Intercepts[j] + (Horizontal_Axis_Intercepts[i] * tan(Angles[k])))), T, F)
+        Leftmost_Points <- ifelse((Data_Frame$Response_Variable > ((tan(Angles[k]) * Data_Frame$Predictor_Variable) + Vertical_Axis_Intercepts[j] - (Horizontal_Axis_Intercepts[i] * tan(Angles[k])))) & (Data_Frame$Response_Variable < ((-tan(Angles[k]) * Data_Frame$Predictor_Variable) + Vertical_Axis_Intercepts[j] + (Horizontal_Axis_Intercepts[i] * tan(Angles[k])))), T, F)
         Topmost_Points <- ifelse((Data_Frame$Response_Variable > ((tan(Angles[k]) * Data_Frame$Predictor_Variable) + Vertical_Axis_Intercepts[j] - (Horizontal_Axis_Intercepts[i] * tan(Angles[k])))) & (Data_Frame$Response_Variable > ((-tan(Angles[k]) * Data_Frame$Predictor_Variable) + Vertical_Axis_Intercepts[j] + (Horizontal_Axis_Intercepts[i] * tan(Angles[k])))), T, F)
         Rightmost_Points <- ifelse((Data_Frame$Response_Variable < ((tan(Angles[k]) * Data_Frame$Predictor_Variable) + Vertical_Axis_Intercepts[j] - (Horizontal_Axis_Intercepts[i] * tan(Angles[k])))) & (Data_Frame$Response_Variable > ((-tan(Angles[k]) * Data_Frame$Predictor_Variable) + Vertical_Axis_Intercepts[j] + (Horizontal_Axis_Intercepts[i] * tan(Angles[k])))), T, F)
         Vertical_Points <- Data_Frame[Bottommost_Points | Topmost_Points, ]
         Vertical_Sum_of_Squared_Residuals <- sum((Vertical_Points$Predictor_Variable - Horizontal_Axis_Intercepts[i]) ^ 2)
-        Horizontal_Points <- Data_Frame[Leftmost_Regions | Rightmost_Points, ]
-        Horizontal_Sum_of_Squared_Residuals <- sum((Horizontal_Points$Response_Variable) ^ 2)
+        Horizontal_Points <- Data_Frame[Leftmost_Points | Rightmost_Points, ]
+        Horizontal_Sum_of_Squared_Residuals <- sum((Horizontal_Points$Response_Variable - Vertical_Axis_Intercepts[j]) ^ 2)
         Overall_Sum_of_Squared_Residuals <- Vertical_Sum_of_Squared_Residuals + Horizontal_Sum_of_Squared_Residuals
-        Output[[Counter]] <- list(Horizontal_Axis_Intercept = Horizontal_Axis_Intercepts[i], Vertical_Axis_Intercept = Vertical_Axis_Intercepts[j], Angle = Angles[k], Overall_Sum_of_Squared_Residuals = Overall_Sum_of_Squared_Residuals, Bottommost_Points_List = Data_Frame[Bottommost_Points, ], Leftmost_Points_List = Data_Frame[Leftmost_Regions, ], Topmost_Points_List = Data_Frame[Topmost_Points, ], Rightmost_Points_List = Data_Frame[Rightmost_Points, ], Vertical_Points = Vertical_Points, Horizontal_Points = Horizontal_Points)
+        Output[[Counter]] <- list(Horizontal_Axis_Intercept = Horizontal_Axis_Intercepts[i], Vertical_Axis_Intercept = Vertical_Axis_Intercepts[j], Angle = Angles[k], Overall_Sum_of_Squared_Residuals = Overall_Sum_of_Squared_Residuals)
         Counter <- Counter + 1
       }
     }
   }
-  Output[[which.min(sapply(Output, `[`, 'Overall_Sum_of_Squared_Residuals'))]]
+  Best_Critical_Point <- Output[[which.min(sapply(Output, `[`, 'Overall_Sum_of_Squared_Residuals'))]]
+  Bottommost_Points_Logical <- ifelse((Data_Frame$Response_Variable < ((tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept - (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))) & (Data_Frame$Response_Variable < ((-tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept + (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))), T, F)
+  Leftmost_Points_Logical <- ifelse((Data_Frame$Response_Variable > ((tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept - (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))) & (Data_Frame$Response_Variable < ((-tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept + (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))), T, F)
+  Topmost_Points_Logical <- ifelse((Data_Frame$Response_Variable > ((tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept - (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))) & (Data_Frame$Response_Variable > ((-tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept + (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))), T, F)
+  Rightmost_Points_Logical <- ifelse((Data_Frame$Response_Variable < ((tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept - (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))) & (Data_Frame$Response_Variable > ((-tan(Best_Critical_Point$Angle) * Data_Frame$Predictor_Variable) + Best_Critical_Point$Vertical_Axis_Intercept + (Best_Critical_Point$Horizontal_Axis_Intercept * tan(Best_Critical_Point$Angle)))), T, F)
+  list(Horizontal_Axis_Intercept = Best_Critical_Point$Horizontal_Axis_Intercept, Vertical_Axis_Intercept = Best_Critical_Point$Vertical_Axis_Intercept, Angle = Best_Critical_Point$Angle, Overall_Sum_of_Squared_Residuals = Best_Critical_Point$Overall_Sum_of_Squared_Residuals, Bottommost_Points = Data_Frame[Bottommost_Points_Logical, ], Leftmost_Points = Data_Frame[Leftmost_Regions_Logical, ], Topmost_Points = Data_Frame[Topmost_Points_Logical, ], Rightmost_Points = Data_Frame[Rightmost_Points_Logical, ], Horizontal_Points = Data_Frame[Leftmost_Regions_Logical | Rightmost_Points_Logical, ], Vertical_Points = Data_Frame[Bottommost_Points_Logical | Topmost_Points_Logical, ])
 }
 
 
@@ -290,7 +295,7 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
 # Let's see if we can identify the critical point for the made-up data we
 # generated in the 'The Explanation' section.
 
-(Output <- Function_for_Finding_the_Critical_Point(Predictor_Variable, Response_Variable, Data_Frame, Horizontal_Variable_Minimum_Value = 5, Horizontal_Variable_Maximum_Value = 40, Vertical_Variable_Minimum_Value = -10, Vertical_Variable_Maximum_Value = 10))
+(Output <- Function_for_Finding_the_Critical_Point(Predictor_Variable, Response_Variable, Data_Frame))
 plot(Response_Variable ~ Predictor_Variable, Data_Frame, main = 'Example Plot', xlab = 'Wood Temperature', ylab = 'Sap Flow')
 abline(h = Output$Vertical_Axis_Intercept, col = 4)
 abline(v = Output$Horizontal_Axis_Intercept, col = 4)
