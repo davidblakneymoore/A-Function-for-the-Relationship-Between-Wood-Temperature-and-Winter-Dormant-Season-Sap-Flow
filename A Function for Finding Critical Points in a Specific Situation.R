@@ -1,9 +1,9 @@
 
-# Finding Critical Points in the Relationship Between Wood Temperature and Winter-Dormant-Season Sap Flow
+# Finding Critical Points
 
 # David Moore
 # University of New Hampshire Ecohydrology Lab
-# July 2023
+# May 2023
 # davidblakneymoore@gmail.com
 
 
@@ -235,3 +235,10 @@ abline(h = Output$Vertical_Axis_Intercept, col = 4)
 abline(v = Output$Horizontal_Axis_Intercept, col = 4)
 
 # I think the function did a nice job!
+
+
+# Works Cited
+
+# Burgess, S.S.O., M.A. Adams, N.C. Turner, C.R. Beverly, C.K. Ong, A.A.H.
+# Khan, and T.M. Bleby. 2001. An improved heat pulse method to measure low and
+# reverse rates of sap flow in woody plants. Tree Physiol. 21:589-598.
