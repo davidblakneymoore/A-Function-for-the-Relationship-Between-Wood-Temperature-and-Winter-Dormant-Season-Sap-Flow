@@ -10,13 +10,21 @@ An even better and more descriptive figure that helps to explain this process is
 
 Actually, a third minor process will also happen concurrently. The vertical position of this critical point will be allowed to vary as well. Although, in theory, sap flow will approach 0 at extreme temperatures, in practice, sap flow values are typically off by a small amount due to probe misalignment (details can be found in Burgess et al., 2001). Therefore, in order to determine the empirical value for no sap flow, this critical point will be allowed to vary vertically, and the vertical position of this critical point will be subtracted from all sap flow values to reset the baseline to 0.
 
-This function takes six arguments. The first two are required.
+This function takes ten arguments. The first two are required.
 
 The `Predictor_Variable` argument specifies which variable will be treated as the variable on the horizontal axis. If the `Data_Frame` argument is used to specify a data frame containing the predictor variable column, the `Predictor_Variable` argument should not be written as a character string (it should not be surrounded by quotation marks). If the `Data_Frame` argument is not used, the `Predictor_Variable` argument should  be written as a character string, surrounded by quotation marks. This argument must be numeric and of the same length as the `Response_Variable` argument.
 
 The `Response_Variable` argument specifies which variable will be treated as the variable on the vertical axis. If the `Data_Frame` argument is used to specify a data frame containing the response variable column, the `Response_Variable` argument should not be written as a character string (it should not be surrounded by quotation marks). If the `Data_Frame` argument is not used, the `Response_Variable` argument should  be written as a character string, surrounded by quotation marks. This argument must be numeric and of the same length as the `Predictor_Variable` argument.
 
 The `Data_Frame` argument is optional and can be used to identify an object of class `'data.frame'` that contains both the predictor and response variables.
+
+The `Horizontal_Variable_Minimum_Value` argument specifies the minimum possible value for the critical point's horizontal axis (predictor variable) value. Since it may not be computationally efficient to search for the critical value across the entire range of the predictor variable, a subset of predictor variable values can be specified.
+
+The `Horizontal_Variable_Maximum_Value` argument specifies the maximum possible value for the critical point's horizontal axis (predictor variable) value. Since it may not be computationally efficient to search for the critical value across the entire range of the predictor variable, a subset of predictor variable values can be specified.
+
+The `Vertical_Variable_Minimum_Value` argument specifies the minimum possible value for the critical point's vertical axis (response variable) value. Since it may not be computationally efficient to search for the critical value across the entire range of the response variable, a subset of response variable values can be specified.
+
+The `Vertical_Variable_Maximum_Value` argument specifies the maximum possible value for the critical point's vertical axis (response variable) value. Since it may not be computationally efficient to search for the critical value across the entire range of the response variable, a subset of response variable values can be specified.
 
 The `Slope_Interval` argument specifies, in radians, how gradually slopes (angles) should increase from `0` to `pi / 2`. Smaller `Slope_Interval` values will cause the function to take longer to run but will lead to more accurate critical values. This argument must be numeric, of length `1`, and between `0` and `pi / 2`.
 
