@@ -191,8 +191,11 @@ Function_for_Finding_the_Critical_Point <- function (Predictor_Variable, Respons
     Response_Variable_Name <- deparse(substitute(Response_Variable))
     Predictor_Variable <- Data_Frame[, deparse(substitute(Predictor_Variable))]
     Response_Variable <- Data_Frame[, deparse(substitute(Response_Variable))]
-    if (!is.numeric(Predictor_Variable) | !is.numeric(Response_Variable)) {
-      stop ("'Predictor_Variable' and 'Response_Variable' must be numeric variables.")
+    if (!is.numeric(Predictor_Variable)) {
+      stop ("'Predictor_Variable' must be a numeric variable.")
+    }
+    if (!is.numeric(Response_Variable)) {
+      stop ("'Response_Variable' must be a numeric variable.")
     }
     if (length(Predictor_Variable) != length(Response_Variable)) {
       stop ("'Predictor_Variable' and 'Response_Variable' must be of the same length.")
